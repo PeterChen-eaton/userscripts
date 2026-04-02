@@ -22,6 +22,7 @@
     const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
     const STORAGE_KEY = 'copilotQuotaOverlayCacheV1';
     const WIDGET_ID = 'tm-copilot-quota-overlay';
+    const STYLE_ID = 'tm-copilot-quota-overlay-style';
 
     const state = {
         data: null,
@@ -122,7 +123,26 @@
         return normalizeQuotaPayload(payload);
     }
 
+    function ensureWidgetStyles() {
+        if (document.getElementById(STYLE_ID)) {
+            return;
+        }
+        const style = document.createElement('style');
+        style.id = STYLE_ID;
+        style.textContent = [
+            '#' + WIDGET_ID + ' {',
+            '  opacity: 1;',
+            '  transition: opacity 0.16s ease;',
+            '}',
+            '#' + WIDGET_ID + ':hover {',
+            '  opacity: 0.02;',
+            '}'
+        ].join('\n');
+        document.head.appendChild(style);
+    }
+
     function getWidget() {
+        ensureWidgetStyles();
         let widget = document.getElementById(WIDGET_ID);
         if (!widget) {
             widget = document.createElement('div');
@@ -144,15 +164,6 @@
             widget.style.pointerEvents = 'auto';
             widget.style.userSelect = 'none';
             widget.style.letterSpacing = '0.1px';
-            widget.style.transition = 'opacity 0.18s ease';
-
-            widget.addEventListener('mouseenter', () => {
-                widget.style.opacity = '0.03';
-            });
-
-            widget.addEventListener('mouseleave', () => {
-                widget.style.opacity = '1';
-            });
 
             document.body.appendChild(widget);
         }
