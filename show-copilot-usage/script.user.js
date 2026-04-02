@@ -141,9 +141,19 @@
             widget.style.fontSize = '12px';
             widget.style.lineHeight = '1.32';
             widget.style.fontFamily = 'IBM Plex Sans, Noto Sans SC, Segoe UI, sans-serif';
-            widget.style.pointerEvents = 'none';
+            widget.style.pointerEvents = 'auto';
             widget.style.userSelect = 'none';
             widget.style.letterSpacing = '0.1px';
+            widget.style.transition = 'opacity 0.18s ease';
+
+            widget.addEventListener('mouseenter', () => {
+                widget.style.opacity = '0.03';
+            });
+
+            widget.addEventListener('mouseleave', () => {
+                widget.style.opacity = '1';
+            });
+
             document.body.appendChild(widget);
         }
         return widget;
