@@ -41,3 +41,4 @@ A collection of Tampermonkey userscripts.
 | Script | Description |
 |--------|-------------|
 | [GitHub Custom Tools](github-custom-tools/script.user.js) | Customizations for GitHub — wider sidebar, auto SSO follow, and more. |
+| [Show Copilot Usage](show-copilot-usage/script.user.js) | Display Copilot quota in a compact top-right overlay on GitHub pages, refreshing every 5 minutes. |
