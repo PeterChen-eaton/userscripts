@@ -15,5 +15,7 @@ Shown fields:
 
 ## Notes
 - Requires a logged-in GitHub session.
-- Uses endpoint: https://github.com/github-copilot/chat with header `Accept: application/json`.
 - When fetch fails, the widget shows cached data and marks it as stale.
+
+## Example
+![Example](example.gif)
