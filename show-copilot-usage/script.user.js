@@ -22,7 +22,6 @@
     const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
     const STORAGE_KEY = 'copilotQuotaOverlayCacheV1';
     const WIDGET_ID = 'tm-copilot-quota-overlay';
-    const STYLE_ID = 'tm-copilot-quota-overlay-style';
 
     const state = {
         data: null,
@@ -123,27 +122,36 @@
         return normalizeQuotaPayload(payload);
     }
 
-    function ensureWidgetStyles() {
-        if (document.getElementById(STYLE_ID)) {
-            return;
-        }
-        const style = document.createElement('style');
-        style.id = STYLE_ID;
-        style.textContent = [
-            '#' + WIDGET_ID + ' {',
-            '  opacity: 1;',
-            '  transition: opacity 0.16s ease, pointer-events 0s 0.16s;',
-            '}',
-            '#' + WIDGET_ID + ':hover {',
-            '  opacity: 0.02;',
-            '  pointer-events: none;',
-            '}'
-        ].join('\n');
-        document.head.appendChild(style);
+    function setupHoverMove(widget) {
+        let onLeft = false;
+        let timer = null;
+
+        widget.addEventListener('mouseenter', () => {
+            if (onLeft) {
+                // Already on left side, move back to right
+                clearTimeout(timer);
+                widget.style.right = '12px';
+                widget.style.left = '';
+                onLeft = false;
+            } else {
+                // On right side, move to left
+                widget.style.right = '';
+                widget.style.left = '12px';
+                onLeft = true;
+            }
+
+            // Auto-return to right side after 8 seconds
+            timer = setTimeout(() => {
+                if (onLeft) {
+                    widget.style.left = '';
+                    widget.style.right = '12px';
+                    onLeft = false;
+                }
+            }, 8000);
+        });
     }
 
     function getWidget() {
-        ensureWidgetStyles();
         let widget = document.getElementById(WIDGET_ID);
         if (!widget) {
             widget = document.createElement('div');
@@ -165,8 +173,10 @@
             widget.style.pointerEvents = 'auto';
             widget.style.userSelect = 'none';
             widget.style.letterSpacing = '0.1px';
+            widget.style.transition = 'left 0.28s ease, right 0.28s ease';
 
             document.body.appendChild(widget);
+            setupHoverMove(widget);
         }
         return widget;
     }
