@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub Copilot Quota Overlay
 // @namespace    https://github.com/PeterChen-eaton/userscripts/blob/main/show-copilot-usage
-// @version      2026.04.02
+// @version      2026.04.21
 // @description  Show Copilot quota on any GitHub page and refresh every 5 minutes.
 // @author       Peter
 // @match        https://github.com/*
@@ -132,10 +132,11 @@
         style.textContent = [
             '#' + WIDGET_ID + ' {',
             '  opacity: 1;',
-            '  transition: opacity 0.16s ease;',
+            '  transition: opacity 0.16s ease, pointer-events 0s 0.16s;',
             '}',
             '#' + WIDGET_ID + ':hover {',
             '  opacity: 0.02;',
+            '  pointer-events: none;',
             '}'
         ].join('\n');
         document.head.appendChild(style);
