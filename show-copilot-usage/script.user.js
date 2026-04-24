@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         GitHub Copilot Quota Overlay
 // @namespace    https://github.com/PeterChen-eaton/userscripts/blob/main/show-copilot-usage
-// @version      2026.04.21
+// @version      2026.04.24
 // @description  Show Copilot quota on any GitHub page and refresh every 5 minutes.
 // @author       Peter
 // @match        https://github.com/*
@@ -18,7 +18,7 @@
     }
     window.__tmCopilotQuotaOverlayInitialized = true;
 
-    const API_URL = 'https://github.com/github-copilot/chat';
+    const API_URL = 'https://github.com/github-copilot/chat/entitlement';
     const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
     const STORAGE_KEY = 'copilotQuotaOverlayCacheV1';
     const WIDGET_ID = 'tm-copilot-quota-overlay';
